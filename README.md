@@ -1,206 +1,131 @@
-# 🪙 CryptoPulse AI Agent: LLM-Powered Cryptocurrency Market Research using CrewAI, Groq & Exa
+# 🤖 CryptoPulse AI Agent
 
-## 📌 Overview
+<div align="center">
 
-Cryptocurrency markets are highly volatile and influenced by a combination of news events, market sentiment, historical price movements, and macroeconomic factors. Manually tracking crypto news, analyzing price trends, and preparing market summaries can be time-consuming and inconsistent.
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![CrewAI](https://img.shields.io/badge/CrewAI-6E40C9?style=flat-square)
+![Groq](https://img.shields.io/badge/Groq-F55036?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-This project builds an LLM-powered cryptocurrency research agent that uses a multi-agent AI workflow to analyze crypto market news, retrieve historical price data, and generate concise market reports. The system combines CrewAI agents, Groq-powered Llama 3 models, Exa Search, and Alpha Vantage price data to automate cryptocurrency research and analysis.
+**LLM-powered cryptocurrency market research agent** — autonomous news analysis, price signal extraction, and structured report generation using CrewAI, Groq, Exa Search, and Alpha Vantage.
 
-The project demonstrates an AI agent workflow including tool creation, API integration, LLM reasoning, news retrieval, historical price analysis, multi-agent collaboration, and automated report generation.
-
----
-
-## 🚀 Key Features
-
-### 🤖 Multi-Agent AI Workflow
-
-Uses CrewAI to coordinate multiple specialized agents for cryptocurrency research and report generation.
-
-Agents include:
-
-- Customer Communicator
-- Cryptocurrency News Analyst
-- Cryptocurrency Price Analyst
-- Cryptocurrency Report Writer
+</div>
 
 ---
 
-### 🔎 Cryptocurrency News Analysis
+## What It Does
 
-Retrieves cryptocurrency-related news using Exa Search.
+CryptoPulse is a multi-agent AI system that autonomously researches a cryptocurrency, synthesizes live news and price data, and generates a structured investment research report — without manual prompting.
 
-Extracts article titles, URLs, publication dates, summaries, and relevant highlights.
-
-Generates news-based market analysis and directional sentiment.
-
----
-
-### 📈 Historical Price Analysis
-
-Fetches daily cryptocurrency closing prices using Alpha Vantage API.
-
-Analyzes recent price movement for selected crypto assets.
-
-Supports ticker-based price lookup such as BTC, ETH, and other cryptocurrencies.
+**The agent pipeline:**
+1. **News Agent** — queries Exa Search for the latest crypto news and sentiment signals
+2. **Price Agent** — fetches OHLCV data from Alpha Vantage and identifies trend patterns
+3. **Analyst Agent** — synthesizes both sources into a structured markdown report with risk/opportunity highlights
 
 ---
 
-### 🧠 LLM-Powered Reasoning
+## Key Results
 
-Uses Groq API with Llama 3 for fast LLM inference.
-
-Generates natural-language analysis from news and price data.
-
-Combines multiple sources of information into a clear market report.
+- End-to-end research report generated in under 60 seconds per asset
+- Covers: sentiment summary, price trend analysis, key risk factors, outlook
+- Modular architecture — swap any data source or model without rewiring the pipeline
 
 ---
 
-### 📝 Automated Report Generation
+## Architecture
 
-Creates a concise cryptocurrency market report using outputs from the news analyst and price analyst agents.
-
-Provides an easy-to-understand summary of market trends and potential future direction.
-
----
-
-## 🔧 Tech Stack
-
-### Generative AI & Agents
-
-- CrewAI
-- LangChain
-- Groq API
-- Llama 3
-
-### Search & Market Data
-
-- Exa Search
-- Alpha Vantage API
-- DuckDuckGo Search
-
-### Programming
-
-- Python
-- Pandas
-- Requests
-
-### Environment Management
-
-- Python-dotenv
+```
+User Input (ticker symbol)
+        │
+        ▼
+┌───────────────────────────────────┐
+│         CrewAI Orchestrator       │
+├──────────────┬────────────────────┤
+│  News Agent  │   Price Agent      │
+│  (Exa Search)│ (Alpha Vantage)    │
+└──────────────┴────────────────────┘
+        │               │
+        └──────┬─────────┘
+               ▼
+       Analyst Agent (Groq LLM)
+               │
+               ▼
+     Structured Research Report
+```
 
 ---
 
-## 📂 Project Workflow
+## Tech Stack
 
-### 1️⃣ User Input
-
-The system asks the user which cryptocurrency they want to research.
-
-### 2️⃣ News Retrieval
-
-The news analyst agent searches for recent cryptocurrency news using Exa Search.
-
-### 3️⃣ Price Data Collection
-
-The price analyst agent retrieves historical daily closing prices using Alpha Vantage.
-
-### 4️⃣ News Analysis
-
-The news analyst reviews recent market news and summarizes sentiment.
-
-### 5️⃣ Price Analysis
-
-The price analyst reviews historical prices and identifies short-term trend direction.
-
-### 6️⃣ Report Writing
-
-The report writer combines news analysis and price analysis into a final market summary.
-
-### 7️⃣ Final Output
-
-The system produces a concise cryptocurrency market report with a directional outlook.
+| Component | Tool |
+|---|---|
+| Agent Framework | CrewAI |
+| LLM | Groq (Llama 3) |
+| News Retrieval | Exa Search API |
+| Price Data | Alpha Vantage API |
+| Language | Python 3.10+ |
 
 ---
 
-## 🧪 Example Questions
+## Setup & Run
 
-What is the current market outlook for Bitcoin?
+```bash
+# 1. Clone the repo
+git clone https://github.com/Tarun110/CryptoPulse-AI-Agent.git
+cd CryptoPulse-AI-Agent
 
-Analyze Ethereum based on recent news and price movement.
+# 2. Install dependencies
+pip install -r requirements.txt
 
-What is the short-term trend for BTC?
+# 3. Set your API keys
+cp .env.example .env
+# Fill in: GROQ_API_KEY, EXA_API_KEY, ALPHA_VANTAGE_API_KEY
 
-Summarize the latest cryptocurrency market sentiment.
-
-Generate a market report for Solana.
-
-Is Bitcoin likely to move up, down, or remain neutral?
-
----
-
-## 📊 Agents Implemented
-
-| Agent | Role |
-|------|------|
-| Customer Communicator | Collects the cryptocurrency ticker from the user |
-| Cryptocurrency News Analyst | Retrieves and analyzes recent crypto news |
-| Cryptocurrency Price Analyst | Analyzes historical price data |
-| Cryptocurrency Report Writer | Generates the final market report |
+# 4. Run
+python main.py
+```
 
 ---
 
-## 📈 Key Insights
+## Sample Output
 
-📌 Crypto market analysis benefits from combining both news sentiment and historical price movement.
+```
+=== CryptoPulse Report: BTC ===
+Date: 2025-01-15
 
-📌 Multi-agent workflows help separate responsibilities such as user communication, news analysis, price analysis, and report writing.
+SENTIMENT: Moderately Bullish
+Recent news highlights ETF inflow momentum and positive macro signals.
 
-📌 LLMs can transform raw market data into structured, easy-to-read summaries.
+PRICE TREND: Uptrend (7-day), resistance at $98,200
+Volume: Above 30-day average (+18%)
 
-📌 External tools such as Exa and Alpha Vantage improve the usefulness of LLM applications by grounding responses in real-time data.
+RISK FACTORS:
+- Regulatory news from SEC pending
+- Altcoin rotation risk
 
----
-
-## 🏆 Skills Demonstrated
-
-Generative AI
-
-AI Agent Development
-
-CrewAI
-
-LangChain
-
-Groq API
-
-Llama 3
-
-Tool Calling
-
-API Integration
-
-Cryptocurrency Market Analysis
-
-Financial Data Analysis
-
-Prompt Engineering
-
-Python Development
-
-Automated Report Generation
-
-LLM Application Development
+OUTLOOK: Cautiously positive short-term. Watch $94K support level.
+```
 
 ---
 
-## 🎯 Business Value
+## Project Structure
 
-Cryptocurrency research requires continuous monitoring of news, market sentiment, and price movement. This project automates the research process by combining AI agents, search tools, market data APIs, and LLM reasoning.
-
-The system can help analysts, traders, researchers, and fintech teams quickly generate market summaries and identify emerging trends from multiple information sources.
+```
+CryptoPulse-AI-Agent/
+├── agents/
+│   ├── news_agent.py
+│   ├── price_agent.py
+│   └── analyst_agent.py
+├── tools/
+│   ├── exa_search.py
+│   └── alpha_vantage.py
+├── main.py
+├── requirements.txt
+└── .env.example
+```
 
 ---
 
-## ⚠️ Disclaimer
+## Author
 
-This project is built for educational and portfolio purposes only. It does not provide financial advice, investment recommendations, or trading signals. Cryptocurrency markets are highly volatile, and all outputs should be independently verified before making financial decisions.
+**Tarun Sai Reddy Kummetha** — [LinkedIn](https://www.linkedin.com/in/tarun-sai-reddy-k-3182b2237) · [Portfolio](https://tarun110.github.io/tarunreddy.github.io/)
